@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission
+        android:name="android.permission.RECEIVE_SMS"
+        tools:ignore="PermissionImpliesUnsupportedChromeOsHardware" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.BusSystem"
+        tools:targetApi="31">
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyD_-WWgpw7jG6H9yfj3zR7mvJV9baKPVMQ" />
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+
+
+        <activity
+            android:name=".SA22403810.Route1TimeTable"
+            android:exported="false" />
+        <activity
+            android:name=".SA22403810.Route2TimeTable"
+            android:exported="false" />
+        <activity
+            android:name=".SA22404350.Confirmation_Dialog_Logout"
+            android:exported="false" />
+        <activity
+            android:name=".SA22404350.Confirmation_Dialog_Delete"
+            android:exported="false" />
+        <activity
+            android:name=".SA22404350.NameChange"
+            android:exported="false" />
+        <activity
+            android:name=".SA22404350.AdditionalSetting"
+            android:exported="false" />
+
+
+        <activity
+            android:name=".SA22403810.BusDriverDetails"
+            android:exported="false" />
+
+
+        <activity
+            android:name=".SA22403810.BusDriverView"
+            android:exported="false" />
+
+
+        <activity
+            android:name=".SA22404350.Register"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".SA22403810.SplashScreen"
+            android:exported="true">
+
+        </activity>
+
+
+
+    </application>
+
+</manifest>

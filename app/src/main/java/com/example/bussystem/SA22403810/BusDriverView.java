@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -28,8 +29,11 @@ import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
 import java.util.List;
@@ -51,7 +55,9 @@ public class BusDriverView extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
     FirebaseUser firebaseUser;
 
+    TextView Speed,LocationName,Type,Number,Route;
 
+    String mobile;
 
 
     @Override
@@ -59,6 +65,19 @@ public class BusDriverView extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bus_driver_view);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
+        Speed = findViewById(R.id.speed);
+        Type = findViewById(R.id.type);
+        Number = findViewById(R.id.number);
+        Route = findViewById(R.id.route);
+         LocationName= findViewById(R.id.location);
+        getWindow().getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_FULLSCREEN |
+                        View.SYSTEM_UI_FLAG_HIDE_NAVIGATION |
+                        View.SYSTEM_UI_FLAG_LAYOUT_STABLE |
+                        View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+        );
+
 
 
 
@@ -75,7 +94,7 @@ public class BusDriverView extends AppCompatActivity {
         databaseReference = firebaseDatabase.getReference();
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
-
+        mobile = FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber();
 
         start = findViewById(R.id.startbtn);
         stop = findViewById(R.id.stopbtn);
@@ -95,14 +114,32 @@ public class BusDriverView extends AppCompatActivity {
 
         // Create a location request
         locationRequest = new LocationRequest();
-        locationRequest.setInterval(10000); // Update interval in milliseconds
-        locationRequest.setFastestInterval(5000); // Fastest update interval in milliseconds
+        locationRequest.setInterval(1000); // Update interval in milliseconds
+        locationRequest.setFastestInterval(500); // Fastest update interval in milliseconds
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
 
 
 
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String type = (String) snapshot.child("Bus Drivers").child(mobile).child("bustype").getValue();
+                Type.setText(type);
 
+                String number = (String) snapshot.child("Bus Drivers").child(mobile).child("vehicleNum").getValue();
+                Number.setText(number);
+
+                String route = (String) snapshot.child("Bus Drivers").child(mobile).child("roadnumber").getValue();
+                Route.setText(route);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
 
 
@@ -117,9 +154,13 @@ public class BusDriverView extends AppCompatActivity {
                 if (location != null) {
                     double latitude = location.getLatitude();
                     double longitude = location.getLongitude();
+                    double speedInMetersPerSecond = location.getSpeed();
+                    int speedInKmPerHour = (int) (speedInMetersPerSecond * 3.6); // Conversion from m/s to km/h
+
+                    Speed.setText(String.valueOf(speedInKmPerHour));
 
                     // Now you can use the latitude and longitude
-                    Toast.makeText(BusDriverView.this, "Latitude: " + latitude + ", Longitude: " + longitude, Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(BusDriverView.this, "Latitude: "  + longitude + ", Speed: " + Speed, Toast.LENGTH_SHORT).show();
 
                     // Use Geocoder to get the location name
                     Geocoder geocoder = new Geocoder(BusDriverView.this, Locale.getDefault());
@@ -129,7 +170,8 @@ public class BusDriverView extends AppCompatActivity {
                         if (!addresses.isEmpty()) {
                             locationName = addresses.get(0).getAddressLine(0);
 
-                            Toast.makeText(BusDriverView.this, locationName, Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(BusDriverView.this, locationName, Toast.LENGTH_SHORT).show();
+                            LocationName.setText(locationName);
 
                             // You can store or use the locationName as needed
                         }

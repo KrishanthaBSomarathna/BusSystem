@@ -91,7 +91,7 @@ private void createEditTextFields() {
         EditText editText = new EditText(this);
 
         // Set input type to number
-        editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+        editText.setInputType(InputType.TYPE_CLASS_TEXT);
 
         // Set background
         editText.setBackgroundResource(R.drawable.editbg_black_border); // You can create a custom drawable for the background

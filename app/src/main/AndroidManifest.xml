@@ -15,9 +15,9 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/baseline_directions_bus_24"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/baseline_directions_bus_24"
         android:supportsRtl="true"
         android:theme="@style/Theme.BusSystem"
         tools:targetApi="31">
@@ -57,23 +57,29 @@
 
         <activity
             android:name=".SA22403810.BusDriverView"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="landscape"/>
+
+        <activity
+            android:name=".SA22404350.BusDriverProfile"
+            android:exported="false"/>
 
 
         <activity
             android:name=".SA22404350.Register"
-            android:exported="true" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            android:exported="true"
+            >
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <activity
             android:name=".SA22403810.SplashScreen"
             android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
 

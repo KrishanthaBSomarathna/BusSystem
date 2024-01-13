@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
@@ -59,6 +60,8 @@ public class BusDriverView extends AppCompatActivity {
 
     String mobile;
 
+    ImageView emg;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +74,7 @@ public class BusDriverView extends AppCompatActivity {
         Number = findViewById(R.id.number);
         Route = findViewById(R.id.route);
          LocationName= findViewById(R.id.location);
+        emg = findViewById(R.id.emg);
         getWindow().getDecorView().setSystemUiVisibility(
                 View.SYSTEM_UI_FLAG_FULLSCREEN |
                         View.SYSTEM_UI_FLAG_HIDE_NAVIGATION |
@@ -90,6 +94,32 @@ public class BusDriverView extends AppCompatActivity {
             }
         });
 
+        emg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Replace "123456789" with the actual emergency phone number
+                String phoneNumber = "1990";
+
+                // Check if the CALL_PHONE permission is granted
+                if (ContextCompat.checkSelfPermission(BusDriverView.this, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
+                    // Create an intent to call the phone number
+                    Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + phoneNumber));
+
+                    // Check if there's an app to handle the intent
+                    if (callIntent.resolveActivity(getPackageManager()) != null) {
+                        // Start the phone call activity
+                        startActivity(callIntent);
+                    } else {
+                        // Handle the case where there's no app to handle the intent
+                        Toast.makeText(BusDriverView.this, "No app to handle the call", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    // Request the CALL_PHONE permission
+                    ActivityCompat.requestPermissions(BusDriverView.this, new String[]{Manifest.permission.CALL_PHONE}, 2);
+                }
+            }
+        });
+
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference();
         firebaseAuth = FirebaseAuth.getInstance();
@@ -100,7 +130,7 @@ public class BusDriverView extends AppCompatActivity {
         stop = findViewById(R.id.stopbtn);
 
         stop.setVisibility(View.GONE);
-        
+
 
         if(firebaseUser==null){
             startActivity(new Intent(this, Register.class));

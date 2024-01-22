@@ -11,6 +11,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,12 +58,15 @@ public class BusDriverView extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
     FirebaseUser firebaseUser;
 
-    TextView Speed,LocationName,Type,Number,Route;
+    TextView Speed,LocationName,Type,Number,Route,route1,route2;
 
     String mobile;
 
     ImageView emg;
-
+    RadioGroup radioGroup;
+    RadioButton radioButton1;
+    RadioButton radioButton2;
+    String startdestination,stopdestination;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,12 +74,38 @@ public class BusDriverView extends AppCompatActivity {
         setContentView(R.layout.activity_bus_driver_view);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
+        radioGroup = findViewById(R.id.radioGroup);
+        radioButton1 = findViewById(R.id.radioButton1);
+        radioButton2 = findViewById(R.id.radioButton2);
+
+
         Speed = findViewById(R.id.speed);
         Type = findViewById(R.id.type);
         Number = findViewById(R.id.number);
         Route = findViewById(R.id.route);
+        route1 = findViewById(R.id.route1);
+
+        route2 = findViewById(R.id.route2);
          LocationName= findViewById(R.id.location);
         emg = findViewById(R.id.emg);
+
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (checkedId == R.id.radioButton1) {
+                    // Handle RadioButton 1 selected
+//                    Toast.makeText(getApplicationContext(), "Option 1 selected", Toast.LENGTH_SHORT).show();
+                    databaseReference.child("Bus Drivers").child(firebaseUser.getPhoneNumber()).child("currentroute").setValue(startdestination + " ➜ " + stopdestination);
+
+                } else if (checkedId == R.id.radioButton2) {
+                    // Handle RadioButton 2 selected
+//                    Toast.makeText(getApplicationContext(), "Option 2 selected", Toast.LENGTH_SHORT).show();
+                    databaseReference.child("Bus Drivers").child(firebaseUser.getPhoneNumber()).child("currentroute").setValue(stopdestination + " ➜ " + startdestination);
+
+                }
+            }
+        });
+
         getWindow().getDecorView().setSystemUiVisibility(
                 View.SYSTEM_UI_FLAG_FULLSCREEN |
                         View.SYSTEM_UI_FLAG_HIDE_NAVIGATION |
@@ -162,6 +193,11 @@ public class BusDriverView extends AppCompatActivity {
 
                 String route = (String) snapshot.child("Bus Drivers").child(mobile).child("roadnumber").getValue();
                 Route.setText(route);
+                startdestination = (String) snapshot.child("Bus Drivers").child(mobile).child("startdestination").getValue();
+                stopdestination = (String) snapshot.child("Bus Drivers").child(mobile).child("stopdestination").getValue();
+                route1.setText(startdestination + " ➜ " + stopdestination);
+
+                route2.setText(stopdestination + " ➜ " + startdestination);
 
             }
 

@@ -33,10 +33,10 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.988"
+        app:layout_constraintHorizontal_bias="0.992"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.822" />
+        app:layout_constraintVertical_bias="0.773" />
 
     <TextView
 
@@ -48,10 +48,10 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.948"
+        app:layout_constraintHorizontal_bias="0.957"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.896" />
+        app:layout_constraintVertical_bias="0.846" />
 
     <TextView
         android:id="@+id/speed6"
@@ -73,7 +73,7 @@
         android:layout_width="46dp"
         android:layout_height="43dp"
         android:layout_marginTop="4dp"
-        android:layout_marginEnd="4dp"
+        android:layout_marginEnd="10dp"
         android:background="@drawable/setting"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -175,7 +175,7 @@
         android:id="@+id/route1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="280dp"
+        android:layout_marginStart="256dp"
         android:layout_marginBottom="56dp"
         android:text="Route"
         android:textColor="#000000"
@@ -187,7 +187,7 @@
         android:id="@+id/route2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="280dp"
+        android:layout_marginStart="256dp"
         android:layout_marginBottom="24dp"
         android:text="Route"
         android:textColor="#000000"
@@ -282,21 +282,21 @@
         android:id="@+id/emg"
         android:layout_width="77dp"
         android:layout_height="83dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="84dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="108dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/emg" />
 
     <RadioGroup
         android:id="@+id/radioGroup"
-        android:layout_width="280dp"
-        android:layout_height="75dp"
+        android:layout_width="282dp"
+        android:layout_height="80dp"
         android:layout_marginBottom="8dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.924"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent">
 
         <RadioButton
